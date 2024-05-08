@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>学生管理</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1 align="center">学生管理</h1>
+    <!-- 学生列表 -->
+    <!-- 添加学生表单 -->
+    <h1>添加学生</h1>
+    <form id="add-student-form">
+        <input type="text" id="student-name" placeholder="学生姓名" required>
+        <input type="text" id="student-sex" placeholder="学生性别" required>
+        <input type="number" id="student-age" placeholder="学生年龄" required>
+        <input type="text" id="student-class" placeholder="学生班级" required>
+        <input type="email" id="student-email" placeholder="学生邮箱" required>
+        <button type="submit">添加学生</button>
+    </form>
+
+    <!-- 删除学生表单 -->
+    <h1>删除学生</h1>
+    <form id="delete-student-form">
+        <input type="number" id="student-id" placeholder="学生ID" required>
+        <button type="submit">删除学生</button>
+    </form>
+
+    <h1>查找学生</h1>
+    <!-- 查找学生表单 -->
+    <form id="search-student-form">
+        <input type="text" id="studentId" placeholder="输入学生ID">
+        <button type="button" onclick="searchStudent()">查找学生</button>
+    </form>
+    
+    <h1>修改学生</h1>
+    <!-- 修改学生表单 -->
+    <form id="update-student-form">
+        <input type="text" id="updateId-student" placeholder="id">
+        <input type="text" id="updateName-student" placeholder="姓名">
+        <input type="text" id="updateSex-student" placeholder="性别">
+        <input type="text" id="updateAge-student" placeholder="年龄">
+        <input type="text" id="updateClass-student" placeholder="班级">
+        <input type="text" id="updateEmail-student" placeholder="邮箱">
+        <button type="button" onclick="updateStudent()">修改学生信息</button>
+    </form>
+
+    <script>
+        // 添加学生
+        $('#add-student-form').submit(function (e) {
+            e.preventDefault();
+            var name = $('#student-name').val();
+            var sex = $('#student-sex').val();
+            var age = $('#student-age').val();
+            var classNum = $('#student-class').val();
+            var email = $('#student-email').val();
+            $.ajax({
+                url: '/students',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ name: name, sex:sex, age: age, class: classNum, email: email }),
+                success: function (response) {
+                    fetchStudents();
+                    $('#student-name').val('');
+                    $('#student-sex').val('');
+                    $('#student-age').val('');
+                    $('#student-class').val('');
+                    $('#student-email').val('');
+                }
+            });
+        });
+
+        // 删除学生
+        $('#delete-student-form').submit(function (e) {
+            e.preventDefault(); // 阻止表单默认提交行为
+            // 获取学生ID
+            var id = $('#student-id').val();
+            $.ajax({
+                url: '/students/' + id,
+                method: 'DELETE',
+                success: function (response) {
+                    alert('学生删除成功。');
+                    // 可以在这里添加代码更新页面上的学生列表
+                    $('#student-id').val(''); // 清空输入框
+                }
+            });
+        });
+
+        // 查找学生
+        function searchStudent() {
+                var id = document.getElementById('studentId').value; // 确保ID与HTML中的一致
+                fetch('/students/' + id)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        // 假设你有一个用于显示学生信息的表单，你需要填充这些数据
+                        document.getElementById('updateId-student').value = data.id;
+                        document.getElementById('updateName-student').value = data.name;
+                        document.getElementById('updateSex-student').value = data.sex;
+                        document.getElementById('updateAge-student').value = data.age;
+                        document.getElementById('updateClass-student').value = data.class;
+                        document.getElementById('updateEmail-student').value = data.email;
+                    })
+                    .catch(error => console.error('Error:', error));
+        }
+
+            // 修改学生信息
+            function updateStudent() {
+                var id = document.getElementById('updateId-student').value;
+                var name = document.getElementById('updateName-student').value;
+                var sex = document.getElementById('updateSex-student').value;
+                var age = document.getElementById('updateAge-student').value;
+                var classNum = document.getElementById('updateClass-student').value;
+                var email = document.getElementById('updateEmail-student').value;
+
+                fetch('/students/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: name, sex: sex, age: age, class: classNum, email: email })
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                        alert('学生信息修改成功。');
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+    </script>
+
+    <h1 align="center">教师管理</h1>
+    <!-- 添加教师表单 -->
+    <h1>添加教师</h1>
+    <form id="add-teacher-form">
+        <input type="text" id="teacher-name" placeholder="教师姓名" required>
+        <input type="text" id="teacher-sex" placeholder="教师性别" required>
+        <input type="text" id="teacher-subject" placeholder="教授科目" required>
+        <input type="tel" id="teacher-phone" placeholder="教师电话" required>
+        <input type="email" id="teacher-email" placeholder="教师邮箱" required>
+        <button type="submit">添加教师</button>
+    </form>
+    
+    <!-- 删除教师表单 -->
+    <h1>删除教师</h1>
+    <form id="delete-teacher-form">
+        <input type="number" id="teacher-id" placeholder="教师ID" required>
+        <button type="submit">删除教师</button>
+    </form>
+
+    <h1>查找教师</h1>
+    <!-- 查找教师表单 -->
+    <form id="search-teacher-form">
+        <input type="text" id="teacherId" placeholder="输入教师ID">
+        <button type="button" onclick="searchTeacher()">查找教师</button>
+    </form>
+    
+    <h1>修改教师</h1>
+    <!-- 修改教师表单 -->
+    <form id="update-teacher-form">
+        <input type="text" id="updateId-teacher" placeholder="id">
+        <input type="text" id="updateName-teacher" placeholder="姓名">
+        <input type="text" id="updateSex-teacher" placeholder="性别">
+        <input type="text" id="updateSubject-teacher" placeholder="科目">
+        <input type="text" id="updatePhone-teacher" placeholder="电话">
+        <input type="text" id="updateEmail-teacher" placeholder="邮箱">
+        <button type="button" onclick="updateTeacher()">修改教师信息</button>
+    </form>
+   
+    
+    <script>
+        // 添加教师
+        $('#add-teacher-form').submit(function (e) {
+            e.preventDefault();
+            var name = $('#teacher-name').val();
+            var sex = $('#teacher-sex').val();
+            var subject = $('#teacher-subject').val();
+            var phone = $('#teacher-phone').val();
+            var email = $('#teacher-email').val();
+            $.ajax({
+                url: '/teachers',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ name: name, sex: sex, subject: subject, phone: phone, email: email }),
+                success: function (response) {
+                    fetchTeachers();
+                    $('#teacher-name').val('');
+                    $('#teacher-sex').val('');
+                    $('#teacher-subject').val('');
+                    $('#teacher-phone').val('');
+                    $('#teacher-email').val('');
+                }
+            });
+        });
+
+        // 删除教师
+        $('#delete-teacher-form').submit(function (e) {
+            e.preventDefault();
+            var id = $('#teacher-id').val();
+            $.ajax({
+                url: '/teachers/' + id,
+                method: 'DELETE',
+                success: function (response) {
+                    alert('教师删除成功。');
+                    fetchTeachers();
+                    $('#teacher-id').val(''); // 清空输入框
+                }
+            });
+        });
+
+    // 查找教师
+    function searchTeacher() {
+        var id = document.getElementById('teacherId').value; // 确保ID与HTML中的一致
+        fetch('/teachers/' + id)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // 假设你有一个用于显示教师信息的表单，你需要填充这些数据
+                document.getElementById('updateId-teacher').value = data.id;
+                document.getElementById('updateName-teacher').value = data.name;
+                document.getElementById('updateSex-teacher').value = data.sex;
+                document.getElementById('updateSubject-teacher').value = data.subject;
+                document.getElementById('updatePhone-teacher').value = data.phone;
+                document.getElementById('updateEmail-teacher').value = data.email;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // 修改教师信息
+    function updateTeacher() {
+        var id = document.getElementById('updateId-teacher').value;
+        var name = document.getElementById('updateName-teacher').value;
+        var sex = document.getElementById('updateSex-teacher').value;
+        var subject = document.getElementById('updateSubject-teacher').value;
+        var phone = document.getElementById('updatePhone-teacher').value;
+        var email = document.getElementById('updateEmail-teacher').value;
+
+        fetch('/students/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: name, sex: sex, subject: subject, phone: phone, email: email })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('教师信息修改成功。');
+            })
+            .catch(error => console.error('Error:', error));
+    }
+       
+    </script>
+</body>
+
+</html>

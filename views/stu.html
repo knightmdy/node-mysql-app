@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>学生</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>学生列表</h1>
+    <!-- 学生列表 -->
+    <div id="students-list"></div>
+    <div id="student-list"></div>
+
+    <script>
+        // 假设这里有一个函数用于从后端获取学生数据并显示在页面上
+        function fetchAndDisplayStudents() {
+            // 使用fetch API从'/students'获取数据
+            fetch('/students')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('student-list');
+                    list.innerHTML = data.map(student =>
+                        `<div>
+                            <h2>${student.name}</h2>
+                            <p>id: ${student.id}</p>
+                            <p>性别: ${student.sex}</p>
+                            <p>年龄: ${student.age}</p>
+                            <p>班级: ${student.class}</p>
+                            <p>邮箱: ${student.email}</p>
+                        </div>`
+                    ).join('');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 页面加载完成后获取并显示学生数据
+        document.addEventListener('DOMContentLoaded', fetchAndDisplayStudents);
+    </script>
+
+</body>
+
+</html>

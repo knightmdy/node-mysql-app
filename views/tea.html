@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>教师</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>教师列表</h1>
+    <!-- 教师列表 -->
+    <div id="teachers-list"></div>
+    <div id="teacher-list"></div>
+    <script>
+        // 假设这里有一个函数用于从后端获取教师数据并显示在页面上
+        function fetchAndDisplayTeachers() {
+            // 使用fetch API从'/teachers'获取数据
+            fetch('/teachers')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('teacher-list');
+                    list.innerHTML = data.map(teacher =>
+                        `<div>
+                            <h2>${teacher.name}</h2>
+                            <p>id: ${teacher.id}</p>
+                            <p>性别: ${teacher.sex}</p>
+                            <p>科目: ${teacher.subject}</p>
+                            <p>电话: ${teacher.phone}</p>
+                            <p>邮箱: ${teacher.email}</p>
+                        </div>`
+                    ).join('');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 页面加载完成后获取并显示教师数据
+        document.addEventListener('DOMContentLoaded', fetchAndDisplayTeachers);
+    </script>
+
+</body>
+
+</html>
