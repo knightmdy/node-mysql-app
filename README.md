@@ -152,6 +152,7 @@ NODE-MYSQL-APP
     │  ├─utils-merge
     │  └─vary
     ├─views   //前端
+    │   ├─index.html   起始界面
     │   ├─admin.html   管理员界面
     │   ├─stu.html   学生界面
     │   └─tea.html   教师界面  
