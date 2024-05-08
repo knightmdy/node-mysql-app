@@ -4,6 +4,7 @@
 <br>本项目使用Nodejs进行后端开发，JavaScript进行前端开发，使用MySQL数据库
 <br>前端使用jQury和Ajax技术，后端使用express框架和body-parser中间件
 <br>相关技术可以通过我的博客查看https://mdyknight.wordpress.com/
+<br>
 #项目结构
 ```
 NODE-MYSQL-APP
