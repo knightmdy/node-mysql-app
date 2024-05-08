@@ -1,11 +1,13 @@
 # node-mysql-app
 学生管理系统网页开发项目
-
-
+#项目说明
+<br>本项目使用Nodejs进行后端开发，JavaScript进行前端开发，使用MySQL数据库
+<br>前端使用jQury和Ajax技术，后端使用express框架和body-parser中间件
+<br>相关技术可以通过我的博客查看https://mdyknight.wordpress.com/
 #项目结构
+```
 NODE-MYSQL-APP
-node-mysql-app
-    ├─node_modules
+    ├─node_modules//node的
     │  ├─.bin
     │  ├─accepts
     │  ├─array-flatten
@@ -149,12 +151,21 @@ node-mysql-app
     │  ├─util-deprecate
     │  ├─utils-merge
     │  └─vary
-    └─views─
-    │   ├─admin.jtml
-    │   ├─stu.html
-    │   └─tea.html  
-    ├─app.js
-    ├─package.json
-    └─package-lock.json
+    ├─views   //前端
+    │   ├─admin.html   管理员界面
+    │   ├─stu.html   学生界面
+    │   └─tea.html   教师界面  
+    ├─app.js   //后端
+    ├─package.json   //node配置依赖文件
+    ├─package-lock.json   //自动生成的配置文件
+    └─db.sql   //数据库创建操作
+```
+
 #使用说明
+    项目clone到本地
     
+    新建终端
+    cd node-mysql-app
+    node app.js
+成功运行会显示数据库连接成功，服务器运行在端口3000。
+然后打开本地浏览器输入http://localhost:3000/查看项目
