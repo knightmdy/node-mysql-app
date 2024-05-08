@@ -1,5 +1,6 @@
 # node-mysql-app
 学生管理系统网页开发项目
+<br>
 #项目说明
 <br>本项目使用Nodejs进行后端开发，JavaScript进行前端开发，使用MySQL数据库
 <br>前端使用jQury和Ajax技术，后端使用express框架和body-parser中间件
