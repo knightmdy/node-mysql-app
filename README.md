@@ -7,7 +7,7 @@
 #项目结构
 ```
 NODE-MYSQL-APP
-    ├─node_modules//node的
+    ├─node_modules//node的npm包及其依赖
     │  ├─.bin
     │  ├─accepts
     │  ├─array-flatten
@@ -167,6 +167,7 @@ NODE-MYSQL-APP
     
     新建终端
     cd node-mysql-app
+    npm i   //node版本18.17.1
     node app.js
 成功运行会显示数据库连接成功，服务器运行在端口3000。
 然后打开本地浏览器输入http://localhost:3000/查看项目
