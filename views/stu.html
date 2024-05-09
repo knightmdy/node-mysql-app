@@ -23,13 +23,13 @@
                 .then(data => {
                     const list = document.getElementById('student-list');
                     list.innerHTML = data.map(student =>
-                        `<div>
+                        `<div class="student-info">
                             <h2>${student.name}</h2>
-                            <p>id: ${student.id}</p>
-                            <p>性别: ${student.sex}</p>
-                            <p>年龄: ${student.age}</p>
-                            <p>班级: ${student.class}</p>
-                            <p>邮箱: ${student.email}</p>
+                            <p>${student.id}</p>
+                            <p>${student.sex}</p>
+                            <p>${student.age}</p>
+                            <p>${student.class}</p>
+                            <p>${student.email}</p>
                         </div>`
                     ).join('');
                 })
@@ -41,5 +41,15 @@
     </script>
 
 </body>
-
+<style>
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            align-items: center;
+        }
+        .student-info p {
+            margin: 0;
+        }
+    </style>
 </html>
